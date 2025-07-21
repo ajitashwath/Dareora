@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'explore.apps.ExploreConfig',
     'leaderboard.apps.LeaderboardConfig',
-    'community.apps.CommunityConfig'
+    'community.apps.CommunityConfig',
+    'postdare.apps.PostdareConfig',
+    'userprofile.apps.UserprofileConfig'
 ]
 
 MIDDLEWARE = [
