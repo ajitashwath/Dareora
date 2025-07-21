@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Leaderboard - Dareora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #1e1e2f, #2b2b3c);
+      color: #f0f0f0;
+      overflow-x: hidden;
+      transition: all 0.3s ease;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Light mode styles */
+    body.light-mode {
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      color: #333;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .header {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 30px;
+      letter-spacing: 1px;
+    }
+
+    .nav-container {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 10px 15px;
+      transition: 0.3s;
+      border-radius: 8px;
+    }
+
+    .light-mode nav a {
+      color: #333;
+    }
+
+    nav a:hover:not(.post-dare-btn) {
+      background: #ffffff11;
+    }
+
+    .light-mode nav a:hover:not(.post-dare-btn) {
+      background: #00000011;
+    }
+
+    nav a.active {
+      background: #00ffc3;
+      color: #1e1e2f;
+      font-weight: bold;
+    }
+
+    .light-mode nav a.active {
+      background: #007a5c;
+      color: white;
+    }
+
+    nav .post-dare-btn {
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+      color: black;
+      font-weight: bold;
+      box-shadow: 0 4px 10px #00ffbf44;
+      border-radius: 50px;
+      margin-right: 20px;
+    }
+
+    nav .post-dare-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px #00ffbf66;
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .login-btn {
+      background: transparent;
+      border: 2px solid #00ffc3;
+      color: #00ffc3;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: #00ffc3;
+      color: #1e1e2f;
+      transform: scale(1.05);
+    }
+
+    .light-mode .login-btn {
+      border-color: #007a5c;
+      color: #007a5c;
+    }
+
+    .light-mode .login-btn:hover {
+      background: #007a5c;
+      color: white;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #00ffc3;
+      border-radius: 50px;
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      margin-left: 15px;
+      color: #00ffc3;
+      font-weight: 500;
+    }
+
+    .light-mode .theme-toggle {
+      background: rgba(0, 0, 0, 0.1);
+      border-color: #007a5c;
+      color: #007a5c;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 255, 195, 0.3);
+    }
+
+    .light-mode .theme-toggle:hover {
+      box-shadow: 0 4px 10px rgba(0, 122, 92, 0.3);
+    }
+
+    .theme-toggle-icon {
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .hero-section {
+      background: linear-gradient(120deg, #1f1f33, #33334d);
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .hero-section {
+      background: linear-gradient(120deg, #e8f4f8, #d4edda);
+      color: #333;
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc66;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .light-mode .hero-title {
+      color: #007a5c;
+      text-shadow: 0 0 10px rgba(0, 122, 92, 0.3);
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 30px;
+    }
+
+    .light-mode .hero-subtitle {
+      color: #666;
+    }
+
+    .stats-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 255, 195, 0.1);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 255, 195, 0.2);
+      min-width: 120px;
+    }
+
+    .light-mode .stat-item {
+      background: rgba(0, 122, 92, 0.1);
+      border-color: rgba(0, 122, 92, 0.2);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    .light-mode .stat-number {
+      color: #007a5c;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-top: 5px;
+    }
+
+    .light-mode .stat-label {
+      color: #666;
+    }
+
+    .main-content {
+      padding: 60px 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .leaderboard-filters {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: #29293d;
+      border: 2px solid #00ffc3;
+      color: #00ffc3;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #00ffc3;
+      color: #29293d;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 255, 195, 0.3);
+    }
+
+    .light-mode .filter-btn {
+      background: white;
+      border-color: #007a5c;
+      color: #007a5c;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .light-mode .filter-btn:hover,
+    .light-mode .filter-btn.active {
+      background: #007a5c;
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 122, 92, 0.3);
+    }
+
+    .podium-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 20px;
+      margin: 40px 0 60px;
+      flex-wrap: wrap;
+    }
+
+    .podium-place {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      animation: slideUp 0.6s ease-out;
+    }
+
+    .podium-place.first { animation-delay: 0.2s; }
+    .podium-place.second { animation-delay: 0.1s; }
+    .podium-place.third { animation-delay: 0s; }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .podium-user {
+      background: #1e1e2f;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      margin-bottom: 10px;
+      width: 180px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .podium-user {
+      background: white;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .podium-user:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 255, 195, 0.2);
+    }
+
+    .podium-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+    }
+
+    .podium-avatar.first {
+      background: linear-gradient(135deg, #ffd700, #ffed4a);
+      color: #333;
+    }
+
+    .podium-avatar.second {
+      background: linear-gradient(135deg, #c0c0c0, #e5e5e5);
+      color: #333;
+    }
+
+    .podium-avatar.third {
+      background: linear-gradient(135deg, #cd7f32, #daa520);
+      color: #fff;
+    }
+
+    .crown {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+    }
+
+    .podium-name {
+      font-weight: bold;
+      color: #00ffcc;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+
+    .light-mode .podium-name {
+      color: #007a5c;
+    }
+
+    .podium-points {
+      color: #ccc;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .light-mode .podium-points {
+      color: #666;
+    }
+
+    .podium-badge {
+      background: rgba(0, 255, 195, 0.2);
+      color: #00ffcc;
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .light-mode .podium-badge {
+      background: rgba(0, 122, 92, 0.2);
+      color: #007a5c;
+    }
+
+    .podium-stand {
+      width: 120px;
+      background: linear-gradient(135deg, #333, #555);
+      border-radius: 10px 10px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.5rem;
+      position: relative;
+    }
+
+    .light-mode .podium-stand {
+      background: linear-gradient(135deg, #ddd, #f0f0f0);
+      color: #333;
+    }
+
+    .podium-stand.first { 
+      height: 100px; 
+      background: linear-gradient(135deg, #ffd700, #ffed4a);
+      color: #333;
+    }
+    .podium-stand.second { 
+      height: 80px; 
+      background: linear-gradient(135deg, #c0c0c0, #e5e5e5);
+      color: #333;
+    }
+    .podium-stand.third { 
+      height: 60px; 
+      background: linear-gradient(135deg, #cd7f32, #daa520);
+    }
+
+    .leaderboard-table {
+      background: #1e1e2f;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 255, 195, 0.1);
+      margin-top: 40px;
+    }
+
+    .light-mode .leaderboard-table {
+      background: white;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-header {
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+      color: #333;
+      padding: 20px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .table-row {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #333;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .light-mode .table-row {
+      border-bottom-color: #eee;
+    }
+
+    .table-row:hover {
+      background: rgba(0, 255, 195, 0.05);
+      transform: translateX(5px);
+    }
+
+    .light-mode .table-row:hover {
+      background: rgba(0, 122, 92, 0.05);
+    }
+
+    .table-row:last-child {
+      border-bottom: none;
+    }
+
+    .rank-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00ffcc;
+      width: 60px;
+      text-align: center;
+    }
+
+    .light-mode .rank-number {
+      color: #007a5c;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      gap: 15px;
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .user-details {
+      flex: 1;
+    }
+
+    .user-name {
+      font-weight: bold;
+      color: #f0f0f0;
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+
+    .light-mode .user-name {
+      color: #333;
+    }
+
+    .user-level {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .light-mode .user-level {
+      color: #666;
+    }
+
+    .user-points {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00ffcc;
+      text-align: right;
+      min-width: 120px;
+    }
+
+    .light-mode .user-points {
+      color: #007a5c;
+    }
+
+    .achievement-badges {
+      display: flex;
+      gap: 5px;
+      margin-left: 15px;
+    }
+
+    .badge {
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .badge.gold {
+      background: linear-gradient(135deg, #ffd700, #ffed4a);
+      color: #333;
+    }
+
+    .badge.silver {
+      background: linear-gradient(135deg, #c0c0c0, #e5e5e5);
+      color: #333;
+    }
+
+    .badge.bronze {
+      background: linear-gradient(135deg, #cd7f32, #daa520);
+      color: #fff;
+    }
+
+    .footer {
+      background: #111;
+      padding: 30px;
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-top: 60px;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .footer {
+      background: #f8f9fa;
+      color: #666;
+    }
+
+    /* Mobile First Responsive Design */
+    @media (max-width: 480px) {
+      .header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .nav-container {
+        width: 100%;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+      }
+
+      nav a {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .post-dare-btn {
+        order: -1;
+        width: 100%;
+        text-align: center;
+        margin-right: 0 !important;
+      }
+
+      .auth-buttons {
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .theme-toggle {
+        margin-left: 0;
+        padding: 6px 10px;
+        font-size: 14px;
+      }
+
+      .hero-section {
+        padding: 40px 15px;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .stats-container {
+        gap: 20px;
+      }
+
+      .stat-item {
+        min-width: 100px;
+        padding: 15px;
+      }
+
+      .main-content {
+        padding: 40px 15px;
+      }
+
+      .leaderboard-filters {
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+
+      .filter-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+      }
+
+      .podium-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .podium-place {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .podium-user {
+        width: 100%;
+      }
+
+      .table-row {
+        padding: 15px 10px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .rank-number {
+        width: auto;
+        font-size: 1.2rem;
+      }
+
+      .user-info {
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .user-points {
+        text-align: center;
+        min-width: auto;
+      }
+
+      .achievement-badges {
+        margin-left: 0;
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .podium-container {
+        gap: 15px;
+      }
+
+      .podium-user {
+        width: 160px;
+      }
+
+      .table-row {
+        padding: 18px 15px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .main-content {
+        padding: 50px 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="brand">Dareora</div>
+    <div class="nav-container">
+      <nav>
+        <a href="#" class="post-dare-btn">Post Dare</a>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'explore' %}">Explore</a>
+        <a href="#" class="active">leaderboard</a>
+        <a href="{% url 'community' %}">Community</a>
+      </nav>
+      <div class="auth-buttons">
+        <a href="#" class="login-btn">Login</a>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span class="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-text">Dark</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-section">
+    <h1 class="hero-title">👑 Leaderboard</h1>
+    <p class="hero-subtitle">See where you rank among the boldest darers</p>
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-number">2,847</div>
+        <div class="stat-label">Active Darers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15,230</div>
+        <div class="stat-label">Dares Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">947,562</div>
+        <div class="stat-label">Total Points</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-content">
+    <div class="leaderboard-filters">
+      <button class="filter-btn active" onclick="filterLeaderboard('all')">All Time</button>
+      <button class="filter-btn" onclick="filterLeaderboard('monthly')">This Month</button>
+      <button class="filter-btn" onclick="filterLeaderboard('weekly')">This Week</button>
+      <button class="filter-btn" onclick="filterLeaderboard('daily')">Today</button>
+    </div>
+
+    <!-- Top 3 Podium -->
+    <div class="podium-container">
+      <div class="podium-place second">
+        <div class="podium-user">
+          <div class="podium-avatar second">
+            <span class="crown">🥈</span>
+            👤
+          </div>
+          <div class="podium-name">ThrilSeeker</div>
+          <div class="podium-points">2,890 points</div>
+          <div class="podium-badge">Daredevil</div>
+        </div>
+        <div class="podium-stand second">2</div>
+      </div>
+      
+      <div class="podium-place first">
+        <div class="podium-user">
+          <div class="podium-avatar first">
+            <span class="crown">👑</span>
+            👤
+          </div>
+          <div class="podium-name">BraveHeart</div>
+          <div class="podium-points">3,250 points</div>
+          <div class="podium-badge">Legend</div>
+        </div>
+        <div class="podium-stand first">1</div>
+      </div>
+      
+      <div class="podium-place third">
+        <div class="podium-user">
+          <div class="podium-avatar third">
+            <span class="crown">🥉</span>
+            👤
+          </div>
+          <div class="podium-name">FearlessOne</div>
+          <div class="podium-points">2,456 points</div>
+          <div class="podium-badge">Challenger</div>
+        </div>
+        <div class="podium-stand third">3</div>
+      </div>
+    </div>
+
+    <!-- Full Leaderboard Table -->
+    <div class="leaderboard-table">
+      <div class="table-header">
+        🏆 Complete Rankings
+      </div>
+      
+      <div class="table-row">
+        <div class="rank-number">4</div>
+        <div class="user-info">
+          <div class="user-avatar">👤</div>
+          <div class="user-details">
+            <div class="user-name">AdventureKing</div>
+            <div class="user-level">Level 28 • Expert</div>
+          </div>
+        </div>
+        <div class="achievement-badges">
+          <span class="badge gold">🔥</span>
+          <span class="badge silver">⚡</span>
+        </div>
+        <div class="user-points">2,124 pts</div>
+      </div>
+
+      <div class="table-row">
+        <div class="rank-number">5</div>
+        <div class="user-info">
+          <div class="user-avatar">👤</div>
+          <div class="user-details">
+            <div class="user-name">RiskTaker99</div>
+            <div class="user-level">Level 24 • Advanced</div>
+          </div>
+        </div>
+        <div class="achievement-badges">
+          <span class="badge bronze">💎</span>
+          <span class="badge gold">🎯</span>
+        </div>
+        <div class="user-points">1,987 pts</div>
+      </div>
+
+      <div class="table-row">
+        <div class="rank-number">6</div>
+        <div class="user-info">
+          <div class="user-avatar">👤</div>
+          <div class="user-details">
+            <div class="user-name">DareDevil2024</div>
+            <div class="user-level">Level 22 • Advanced</div>
+          </div>
+        </div>
+        <div class="achievement-badges">
+          <span class="badge silver">⭐</span>
+        </div>
+        <div class="user-points">1,756 pts</div>
+      </div>
+
+      <div class="table-row">
+        <div class="rank-number">7</div>
+        <div class="user-info">
+          <div class="user-avatar">👤</div>
+          <div class="user-details">
+            <div class="user-name">CourageMaster</div>
+            <div class="user-level">Level 19 • Intermediate</div>
+          </div>
+        </div>
+        <div class="achievement-badges">
+          <span class="badge bronze">🏅</span>
+          <span class="badge bronze">🚀</span>
+        </div>
+        <div class="user-points">1,432 pts</div>
+      </div>
+
+      <div class="table-row">
+        <div class="rank-number">8</div>
+        <div class="user-info">
+          <div class="user-avatar">👤</div>
+          <div class="user-details">
+            <div class="user-name">BoldChallenger</div>
+            <div class="user-level">Level 17 • Intermediate</div>
+          </div>
+        </div>
+        <div class="achievement-badges">
+          <span class="badge silver">🎖️</span>
+        </div>
+        <div class="user-points">1,298 pts</div>
+      </div>
+
+      <div class="table-row">
+        <div class="rank-number">9</div>
+        <div class="user-info">
+          <div class="user-avatar">👤</div>
+          <div class="user-details">
+            <div class="user-name">ExtremePlayer</div>
+            <div class="user-level">Level 15 • Intermediate</div>
+          </div>
+        </div>
+        <div class="achievement-badges">
+          <span class="badge bronze">💪</span>
+        </div>
+        <div class="user-points">1,156 pts</div>
+      </div>
+
+      <div class="table-row">
+        <div class="rank-number">10</div>
+        <div class="user-info">
+          <div class="user-avatar">👤</div>
+          <div class="user-details">
+            <div class="user-name">WildSpirit</div>
+            <div class="user-level">Level 14 • Beginner</div>
+          </div>
+        </div>
+        <div class="achievement-badges">
+          <span class="badge bronze">

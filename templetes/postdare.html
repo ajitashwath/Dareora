@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Post Dare - DareHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #1e1e2f, #2b2b3c);
+      color: #f0f0f0;
+      overflow-x: hidden;
+      transition: all 0.3s ease;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Light mode styles */
+    body.light-mode {
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      color: #333;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .header {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 30px;
+      letter-spacing: 1px;
+    }
+
+    .nav-container {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 10px 15px;
+      transition: 0.3s;
+    }
+
+    .light-mode nav a {
+      color: #333;
+    }
+
+    nav a:hover:not(.post-dare-btn) {
+      background: #ffffff11;
+      border-radius: 8px;
+    }
+
+    .light-mode nav a:hover:not(.post-dare-btn) {
+      background: #00000011;
+    }
+
+    nav .home-btn {
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+      color: black;
+      font-weight: bold;
+      box-shadow: 0 4px 10px #00ffbf44;
+      border-radius: 50px;
+      margin-right: 20px;
+    }
+
+    nav .home-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px #00ffbf66;
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .login-btn {
+      background: transparent;
+      border: 2px solid #00ffc3;
+      color: #00ffc3;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: #00ffc3;
+      color: #1e1e2f;
+      transform: scale(1.05);
+    }
+
+    .light-mode .login-btn {
+      border-color: #007a5c;
+      color: #007a5c;
+    }
+
+    .light-mode .login-btn:hover {
+      background: #007a5c;
+      color: white;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #00ffc3;
+      border-radius: 50px;
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      margin-left: 15px;
+      color: #00ffc3;
+      font-weight: 500;
+    }
+
+    .light-mode .theme-toggle {
+      background: rgba(0, 0, 0, 0.1);
+      border-color: #007a5c;
+      color: #007a5c;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 255, 195, 0.3);
+    }
+
+    .light-mode .theme-toggle:hover {
+      box-shadow: 0 4px 10px rgba(0, 122, 92, 0.3);
+    }
+
+    .theme-toggle-icon {
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(120deg, #1f1f33, #33334d);
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .page-header {
+      background: linear-gradient(120deg, #e8f4f8, #d4edda);
+      color: #333;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #00ffcc;
+      text-shadow: 0 0 20px #00ffcc66;
+    }
+
+    .light-mode .page-header h1 {
+      color: #007a5c;
+      text-shadow: 0 0 20px rgba(0, 122, 92, 0.3);
+    }
+
+    .page-header p {
+      font-size: 1.3rem;
+      color: #ccc;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .light-mode .page-header p {
+      color: #666;
+    }
+
+    /* Form Container */
+    .form-container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .form-card {
+      background: #1e1e2f;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 200, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .form-card {
+      background: white;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #00ffcc;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .light-mode .form-group label {
+      color: #007a5c;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 15px 18px;
+      background: #29293d;
+      border: 2px solid #444;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .form-group input,
+    .light-mode .form-group textarea,
+    .light-mode .form-group select {
+      background: #f8f9fa;
+      border-color: #ddd;
+      color: #333;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #00ffc3;
+      box-shadow: 0 0 15px rgba(0, 255, 195, 0.3);
+    }
+
+    .light-mode .form-group input:focus,
+    .light-mode .form-group textarea:focus,
+    .light-mode .form-group select:focus {
+      border-color: #007a5c;
+      box-shadow: 0 0 15px rgba(0, 122, 92, 0.3);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .difficulty-selector {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .difficulty-option {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .difficulty-option input[type="radio"] {
+      display: none;
+    }
+
+    .difficulty-option label {
+      display: block;
+      padding: 12px 20px;
+      background: #29293d;
+      border: 2px solid #444;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .light-mode .difficulty-option label {
+      background: #f8f9fa;
+      border-color: #ddd;
+    }
+
+    .difficulty-option input[type="radio"]:checked + label {
+      background: #00ffc3;
+      border-color: #00ffc3;
+      color: #111;
+    }
+
+    .light-mode .difficulty-option input[type="radio"]:checked + label {
+      background: #007a5c;
+      border-color: #007a5c;
+      color: white;
+    }
+
+    .difficulty-option label:hover {
+      border-color: #00ffc3;
+      transform: translateY(-2px);
+    }
+
+    .light-mode .difficulty-option label:hover {
+      border-color: #007a5c;
+    }
+
+    .points-display {
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+      color: #111;
+      padding: 15px 25px;
+      border-radius: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 15px;
+    }
+
+    .file-upload {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .file-upload input[type="file"] {
+      display: none;
+    }
+
+    .file-upload label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      background: #29293d;
+      border: 2px dashed #00ffc3;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #00ffc3;
+      font-weight: 500;
+    }
+
+    .light-mode .file-upload label {
+      background: #f8f9fa;
+      border-color: #007a5c;
+      color: #007a5c;
+    }
+
+    .file-upload label:hover {
+      background: rgba(0, 255, 195, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .light-mode .file-upload label:hover {
+      background: rgba(0, 122, 92, 0.1);
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+      color: #111;
+      padding: 18px 40px;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 30px;
+      box-shadow: 0 8px 20px rgba(0, 255, 195, 0.3);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 255, 195, 0.4);
+    }
+
+    .submit-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .preview-section {
+      margin-top: 40px;
+      padding: 30px;
+      background: #29293d;
+      border-radius: 15px;
+      border: 1px solid #444;
+    }
+
+    .light-mode .preview-section {
+      background: #f8f9fa;
+      border-color: #ddd;
+    }
+
+    .preview-title {
+      color: #00ffcc;
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .light-mode .preview-title {
+      color: #007a5c;
+    }
+
+    .preview-card {
+      background: #1e1e2f;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.1);
+    }
+
+    .light-mode .preview-card {
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .footer {
+      background: #111;
+      padding: 30px;
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-top: 60px;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .footer {
+      background: #f8f9fa;
+      color: #666;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 480px) {
+      .header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .nav-container {
+        width: 100%;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+      }
+
+      nav a {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .auth-buttons {
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .theme-toggle {
+        margin-left: 0;
+        padding: 6px 10px;
+        font-size: 14px;
+      }
+
+      .page-header {
+        padding: 40px 15px;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+      }
+
+      .form-container {
+        margin: 40px auto;
+        padding: 0 15px;
+      }
+
+      .form-card {
+        padding: 25px;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .difficulty-selector {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .difficulty-option {
+        min-width: auto;
+      }
+
+      .submit-btn {
+        padding: 15px 30px;
+        font-size: 16px;
+      }
+
+      .preview-section {
+        margin-top: 30px;
+        padding: 20px;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 768px) {
+      .header {
+        padding: 18px 30px;
+      }
+
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .auth-buttons {
+        flex-direction: row;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .theme-toggle {
+        margin-left: 0;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+
+      .form-card {
+        padding: 35px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="brand">Dareora</div>
+    <div class="nav-container">
+      <nav>
+        <a href="#" class="home-btn">Home</a>
+        <a href="#">Explore</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Community</a>
+      </nav>
+      <div class="auth-buttons">
+        <a href="#" class="login-btn">Login</a>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span class="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-text">Dark</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-header">
+    <h1>🎯 Create Your Dare</h1>
+    <p>Challenge the community with your unique dare and watch brave souls take it on!</p>
+  </div>
+
+  <div class="form-container">
+    <div class="form-card">
+      <form id="dareForm">
+        <div class="form-group">
+          <label for="dareTitle">Dare Title *</label>
+          <input type="text" id="dareTitle" name="dareTitle" placeholder="Enter an exciting title for your dare" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dareDescription">Dare Description *</label>
+          <textarea id="dareDescription" name="dareDescription" placeholder="Describe your dare in detail. What exactly should participants do?" required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+              <option value="">Select Category</option>
+              <option value="physical">Physical Challenge</option>
+              <option value="mental">Mental Challenge</option>
+              <option value="social">Social Challenge</option>
+              <option value="creative">Creative Challenge</option>
+              <option value="adventure">Adventure</option>
+              <option value="food">Food Challenge</option>
+              <option value="skill">Skill Challenge</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="duration">Duration</label>
+            <input type="text" id="duration" name="duration" placeholder="e.g., 30 minutes, 1 day, 1 week">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Difficulty Level *</label>
+          <div class="difficulty-selector">
+            <div class="difficulty-option">
+              <input type="radio" id="easy" name="difficulty" value="easy">
+              <label for="easy">Easy<br><small>50-100 pts</small></label>
+            </div>
+            <div class="difficulty-option">
+              <input type="radio" id="medium" name="difficulty" value="medium">
+              <label for="medium">Medium<br><small>150-250 pts</small></label>
+            </div>
+            <div class="difficulty-option">
+              <input type="radio" id="hard" name="difficulty" value="hard">
+              <label for="hard">Hard<br><small>300-400 pts</small></label>
+            </div>
+            <div class="difficulty-option">
+              <input type="radio" id="extreme" name="difficulty" value="extreme">
+              <label for="extreme">Extreme<br><small>500+ pts</small></label>
+            </div>
+          </div>
+          <div class="points-display" id="pointsDisplay">Select difficulty to see points</div>
+        </div>
+
+        <div class="form-group">
+          <label for="rules">Rules & Guidelines</label>
+          <textarea id="rules" name="rules" placeholder="List any specific rules, safety guidelines, or requirements for this dare"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ageLimit">Minimum Age</label>
+            <select id="ageLimit" name="ageLimit">
+              <option value="13">13+</option>
+              <option value="16">16+</option>
+              <option value="18" selected>18+</option>
+              <option value="21">21+</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="maxParticipants">Max Participants</label>
+            <input type="number" id="maxParticipants" name="maxParticipants" min="1" max="1000" placeholder="Leave empty for unlimited">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="proofRequired">Proof Required</label>
+          <div class="file-upload">
+            <input type="file" id="proofRequired" name="proofRequired" accept="image/*,video/*" multiple>
+            <label for="proofRequired">
+              📷 Upload example images or videos (optional)
+              <br><small>Show participants what kind of proof you expect</small>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">🚀 Post Your Dare</button>
+      </form>
+
+      <div class="preview-section" id="previewSection" style="display: none;">
+        <h3 class="preview-title">📋 Preview Your Dare</h3>
+        <div class="preview-card" id="previewCard">
+          <!-- Preview content will be generated here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Connect with us on social media • Made with 💜 Visily</p>
+    <p>© 2025 DareHub. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.querySelector('.theme-toggle-icon');
+      const themeText = document.querySelector('.theme-toggle-text');
+      
+      body.classList.toggle('light-mode');
+      
+      if (body.classList.contains('light-mode')) {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light';
+      } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark';
+      }
+    }
+
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const body = document.body;
+      const themeIcon = document.querySelector('.theme-toggle-icon');
+      const themeText = document.querySelector('.theme-toggle-text');
+      
+      // For demo purposes, we'll start with dark mode
+      // In a real app, you'd check localStorage here
+    });
+
+    // Difficulty selection and points calculation
+    const difficultyOptions = document.querySelectorAll('input[name="difficulty"]');
+    const pointsDisplay = document.getElementById('pointsDisplay');
+
+    const pointsMap = {
+      easy: { min: 50, max: 100 },
+      medium: { min: 150, max: 250 },
+      hard: { min: 300, max: 400 },
+      extreme: { min: 500, max: 800 }
+    };
+
+    difficultyOptions.forEach(option => {
+      option.addEventListener('change', function() {
+        if (this.checked) {
+          const difficulty = this.value;
+          const points = pointsMap[difficulty];
+          const randomPoints = Math.floor(Math.random() * (points.max - points.min + 1)) + points.min;
+          pointsDisplay.textContent = `${randomPoints} points`;
+        }
+      });
+    });
+
+    // Form preview functionality
+    const form = document.getElementById('dareForm');
+    const previewSection = document.getElementById('previewSection');
+    const previewCard = document.getElementById('previewCard');
+
+    function updatePreview() {
+      const formData = new FormData(form);
+      const title = formData.get('dareTitle');
+      const description = formData.get('dareDescription');
+      const category = formData.get('category');
+      const difficulty = formData.get('difficulty');
+      const duration = formData.get('duration');
+
+      if (title && description && difficulty) {
+        previewSection.style.display = 'block';
+        
+        const points = pointsDisplay.textContent;
+        const categoryEmojis = {
+          physical: '💪',
+          mental: '🧠',
+          social: '👥',
+          creative: '🎨',
+          adventure: '🗻',
+          food: '🍽️',
+          skill: '🎯'
+        };
+
+        previewCard.innerHTML = `
+          <h3 style="color: #00ffe5; font-size: 20px; margin: 10px 0;">${title}</h3>
+          <p style="color: #ccc; margin-bottom: 8px;">${description}</p>
+          <p style="color: #ccc; margin-bottom: 8px;"><strong>Category:</strong> ${categoryEmojis[category] || '🎯'} ${category || 'Not specified'}</p>
+          <p style="color: #ccc; margin-bottom: 8px;"><strong>Difficulty:</strong> ${difficulty ? difficulty.charAt(0).toUpperCase() + difficulty.slice(1) : 'Not selected'}</p>
+          ${duration ? `<p style="color: #ccc; margin-bottom: 8px;"><strong>Duration:</strong> ${duration}</p>` : ''}
+          <p style="color: #ccc; margin-bottom: 8px;"><strong>Points:</strong> ${points}</p>
+        `;
+
+        // Apply light mode styles to preview if needed
+        if (document.body.classList.contains('light-mode')) {
+          previewCard.style.background = 'white';
+          previewCard.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+          const previewTitle = previewCard.querySelector('h3');
+          if (previewTitle) previewTitle.style.color = '#007a5c';
+          const previewTexts = previewCard.querySelectorAll('p');
+          previewTexts.forEach(p => p.style.color = '#666');
+        }
+      } else {
+        previewSection.style.display = 'none';
+      }
+    }
+
+    // Add event listeners for real-time preview
+    form.addEventListener('input', updatePreview);
+    form.addEventListener('change', updatePreview);
+
+    // Form submission
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Show success message
+      const submitBtn = document.querySelector('.submit-btn');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = '✅ Dare Posted Successfully!';
+      submitBtn.style.background = 'linear-gradient(135deg, #00ff95, #00d4ff)';
+      
+      setTimeout(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.style.background = 'linear-gradient(135deg, #00ff95, #00d4ff)';
+        // In a real app, you'd redirect to the dare page or home
+        alert('Dare posted successfully! Redirecting to home page...');
+      }, 2000);
+    });
+
+    // File upload preview
+    const fileInput = document.getElementById('proofRequired');
+    const fileLabel = fileInput.nextElementSibling;
+
+    fileInput.addEventListener('change', function() {
+      const files = this.files;
+      if (files.length > 0) {
+        fileLabel.innerHTML = `📷 ${files.length} file(s) selected<br><small>Ready to upload</small>`;
+      } else {
+        fileLabel.innerHTML = '📷 Upload example images or videos (optional)<br><small>Show participants what kind of proof you expect</small>';
+      }
+    });
+  </script>
+</body>
+
+</html>

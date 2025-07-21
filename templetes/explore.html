@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Dareora | Explore Dares</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Base styles matching the provided homepage theme */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      /* Updated background to match the provided image more closely */
+      background: linear-gradient(to bottom right, #1a1a2e, #2a2a3e);
+      color: #f0f0f0;
+      overflow-x: hidden;
+      transition: all 0.3s ease;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Light mode styles (for theme toggle) */
+    body.light-mode {
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      color: #333;
+    }
+
+    /* Header/Navbar specific styles */
+    .header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      background-color: rgba(30, 30, 47, 0.8);
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+    }
+
+    body.light-mode .header {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-link {
+      color: #f0f0f0;
+      transition: color 0.3s ease;
+    }
+
+    body.light-mode .nav-link {
+      color: #333;
+    }
+
+    .nav-link:hover {
+      color: #00bcd4;
+    }
+
+    .theme-toggle-icon {
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* New styles for buttons and cards based on provided images */
+    .btn-primary {
+      background: linear-gradient(to right, #00bcd4, #00e5ff);
+      color: #1e1e2f;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 200, 220, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 200, 220, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #00bcd4;
+      border: 2px solid #00bcd4;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(0, 188, 212, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .dare-card {
+      background-color: #2b2b3c;
+      border-radius: 1.5rem;
+      /* More rounded corners */
+      padding: 2.5rem;
+      /* More padding */
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      /* Deeper shadow */
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    body.light-mode .dare-card {
+      background-color: #ffffff;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .dare-card:hover {
+      transform: translateY(-8px);
+      /* More pronounced lift on hover */
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    body.light-mode .dare-card:hover {
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .dare-title {
+      font-family: 'Poppins', sans-serif;
+      /* Use Poppins for dare titles */
+      font-weight: 600;
+      color: #00bcd4;
+      /* Teal color for titles */
+    }
+
+    .dare-info {
+      color: #a0a0a0;
+      /* Lighter gray for difficulty/points */
+      font-size: 0.95rem;
+    }
+
+    .dare-description {
+      color: #e0e0e0;
+      /* Slightly lighter text for description */
+    }
+
+    body.light-mode .dare-title {
+      color: #00838f;
+    }
+
+    body.light-mode .dare-info {
+      color: #666;
+    }
+
+    body.light-mode .dare-description {
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header p-4 shadow-lg">
+    <div class="container mx-auto flex items-center justify-between md:justify-start">
+      <!-- Logo: Adjusted color to white as per image -->
+      <h1 class="text-4xl font-orbitron font-bold text-white mr-8">Dareora</h1>
+
+      <nav class="hidden md:flex items-center space-x-6">
+        <a href="#" class="btn-primary py-2 px-6">Post Dare</a>
+        <!-- Adjusted spacing for nav links to match image -->
+        <a href="{% url 'home' %}" class="nav-link text-lg font-medium">Home</a>
+        <a href="#" class="nav-link text-lg font-medium">explore</a>
+        <a href="{% url 'leaderboard' %}" class="nav-link text-lg font-medium">Leaderboard</a>
+        <a href="{% url 'community' %}" class="nav-link text-lg font-medium">Community</a>
+      </nav>
+
+      <div class="hidden md:flex items-center space-x-4 ml-auto">
+        <a href="#" class="btn-outline py-2 px-6">Login</a>
+        <div class="theme-toggle flex items-center cursor-pointer btn-outline py-2 px-4" onclick="toggleTheme()">
+          <span class="theme-toggle-icon text-xl mr-2">🌙</span>
+          <span class="theme-toggle-text text-lg font-medium">Dark</span>
+        </div>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button class="md:hidden text-3xl text-white focus:outline-none">
+        &#9776;
+      </button>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <section class="text-center mb-12">
+      <h2 class="text-4xl font-orbitron font-bold text-teal-400 mb-4">All Posts</h2>
+      <p class="text-lg text-gray-300 max-w-2xl mx-auto">Discover exciting challenges posted by other users. Find your
+        next adventure!</p>
+    </section>
+
+    <section id="all-dares" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Dare cards will be dynamically inserted here by JavaScript -->
+    </section>
+  </main>
+
+  <footer class="bg-gray-800 text-gray-400 py-6 text-center">
+    <div class="container mx-auto">
+      <p>&copy; 2025 Dareora. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const daresData = [
+      {
+        id: 'dare1',
+        title: 'Eat the Spiciest Chili',
+        description: 'Conquer the Carolina Reaper and record your reaction!',
+        difficulty: 'Extreme',
+        points: 500
+      },
+      {
+        id: 'dare2',
+        title: 'Blindfolded Maze Run',
+        description: 'Navigate a maze blindfolded with verbal cues only.',
+        difficulty: 'Hard',
+        points: 350
+      },
+      {
+        id: 'dare3',
+        title: 'Midnight Forest Solo',
+        description: 'Spend a night alone in the forest, no electronics.',
+        difficulty: 'Very Hard',
+        points: 600
+      },
+      {
+        id: 'dare4',
+        title: 'Build a Sandcastle City',
+        description: 'Construct an elaborate sandcastle city on the beach, complete with walls and towers.',
+        difficulty: 'Medium',
+        points: 200
+      },
+      {
+        id: 'dare5',
+        title: 'Learn a New Language (Basic Phrases)',
+        description: 'Master 10 basic conversational phrases in a language you\'ve never studied.',
+        difficulty: 'Medium',
+        points: 250
+      },
+      {
+        id: 'dare6',
+        title: 'Create a Stop-Motion Animation',
+        description: 'Produce a short stop-motion animation using everyday objects.',
+        difficulty: 'Hard',
+        points: 400
+      }
+    ];
+
+    function renderDares() {
+      const allDaresSection = document.getElementById('all-dares');
+      allDaresSection.innerHTML = ''; // Clear existing content
+
+      daresData.forEach(dare => {
+        const dareCard = document.createElement('div');
+        dareCard.className = 'dare-card p-6 rounded-xl shadow-lg flex flex-col justify-between';
+        dareCard.innerHTML = `
+          <div>
+            <h3 class="dare-title text-2xl mb-2">${dare.title}</h3>
+            <p class="dare-description text-sm mb-4">${dare.description}</p>
+            <p class="dare-info text-sm mb-1">Difficulty: <span class="font-medium">${dare.difficulty}</span></p>
+            <p class="dare-info text-sm mb-6">${dare.points} points</p>
+          </div>
+          <div>
+            <a href="dare-page.html?id=${dare.id}" class="btn-primary block w-full text-center py-3">
+              View Dare
+            </a>
+          </div>
+        `;
+        allDaresSection.appendChild(dareCard);
+      });
+    }
+
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.querySelector('.theme-toggle-icon');
+      const themeText = document.querySelector('.theme-toggle-text');
+
+      body.classList.toggle('light-mode');
+
+      if (body.classList.contains('light-mode')) {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light';
+        localStorage.setItem('theme', 'light');
+      } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const savedTheme = localStorage.getItem('theme');
+      const body = document.body;
+      const themeIcon = document.querySelector('.theme-toggle-icon');
+      const themeText = document.querySelector('.theme-toggle-text');
+
+      if (savedTheme === 'light') {
+        body.classList.add('light-mode');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light';
+      } else {
+        body.classList.remove('light-mode');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark';
+      }
+
+      renderDares();
+    });
+  </script>
+</body>
+
+</html>

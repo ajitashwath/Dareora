@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>DareHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #1e1e2f, #2b2b3c);
+      color: #f0f0f0;
+      overflow-x: hidden;
+      transition: all 0.3s ease;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Light mode styles */
+    body.light-mode {
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      color: #333;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .header {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 30px;
+      letter-spacing: 1px;
+    }
+
+    .nav-container {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 10px 15px;
+      transition: 0.3s;
+    }
+
+    .light-mode nav a {
+      color: #333;
+    }
+
+    nav a:hover:not(.post-dare-btn) {
+      background: #ffffff11;
+      border-radius: 8px;
+    }
+
+    .light-mode nav a:hover:not(.post-dare-btn) {
+      background: #00000011;
+    }
+
+    nav .post-dare-btn {
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+      color: black;
+      font-weight: bold;
+      box-shadow: 0 4px 10px #00ffbf44;
+      border-radius: 50px;
+      margin-right: 20px;
+    }
+
+    nav .post-dare-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px #00ffbf66;
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .login-btn {
+      background: transparent;
+      border: 2px solid #00ffc3;
+      color: #00ffc3;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: #00ffc3;
+      color: #1e1e2f;
+      transform: scale(1.05);
+    }
+
+    .light-mode .login-btn {
+      border-color: #007a5c;
+      color: #007a5c;
+    }
+
+    .light-mode .login-btn:hover {
+      background: #007a5c;
+      color: white;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #00ffc3;
+      border-radius: 50px;
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      margin-left: 15px;
+      color: #00ffc3;
+      font-weight: 500;
+    }
+
+    .light-mode .theme-toggle {
+      background: rgba(0, 0, 0, 0.1);
+      border-color: #007a5c;
+      color: #007a5c;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 255, 195, 0.3);
+    }
+
+    .light-mode .theme-toggle:hover {
+      box-shadow: 0 4px 10px rgba(0, 122, 92, 0.3);
+    }
+
+    .theme-toggle-icon {
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .slider-container {
+      background: linear-gradient(120deg, #1f1f33, #33334d);
+      color: #fff;
+      padding: 60px 20px 40px;
+      text-align: center;
+      position: relative;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .slider-container {
+      background: linear-gradient(120deg, #e8f4f8, #d4edda);
+      color: #333;
+    }
+
+    .slider-wrapper {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slider-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.6s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .slider-slide.slide-active {
+      opacity: 1;
+    }
+
+    .slider-slide h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc66;
+    }
+
+    .light-mode .slider-slide h2 {
+      color: #007a5c;
+      text-shadow: 0 0 10px rgba(0, 122, 92, 0.3);
+    }
+
+    .slider-slide p {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+
+    .light-mode .slider-slide p {
+      color: #666;
+    }
+
+    .slider-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .slider-dot {
+      width: 12px;
+      height: 12px;
+      background: #00ffc344;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      border: none;
+    }
+
+    .slider-dot.active {
+      background: #00ffc3;
+      transform: scale(1.2);
+    }
+
+    .light-mode .slider-dot {
+      background: rgba(0, 122, 92, 0.4);
+    }
+
+    .light-mode .slider-dot.active {
+      background: #007a5c;
+    }
+
+    .main-content {
+      padding: 60px 30px;
+    }
+
+    .section {
+      margin-bottom: 80px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc66;
+    }
+
+    .light-mode .section-title {
+      color: #007a5c;
+      text-shadow: 0 0 10px rgba(0, 122, 92, 0.3);
+    }
+
+    .dare-options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .dare-options a {
+      background: #29293d;
+      border: 2px solid #00ffc3;
+      color: #00ffc3;
+      padding: 15px 30px;
+      border-radius: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .dare-options a:hover {
+      background: #00ffc3;
+      color: #29293d;
+    }
+
+    .light-mode .dare-options a {
+      background: white;
+      border-color: #007a5c;
+      color: #007a5c;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .light-mode .dare-options a:hover {
+      background: #007a5c;
+      color: white;
+    }
+
+    .dares-container,
+    .reviews-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px 0;
+    }
+
+    .dare-card {
+      background: #1e1e2f;
+      padding: 25px;
+      border-radius: 15px;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.1);
+      transition: transform 0.4s ease, background 0.3s ease;
+    }
+
+    .dare-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 255, 200, 0.2);
+    }
+
+    .light-mode .dare-card {
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .light-mode .dare-card:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .review-card {
+      background: #1e1e2f;
+      padding: 25px;
+      border-radius: 15px;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.1);
+      transition: transform 0.4s ease, background 0.3s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 255, 200, 0.2);
+    }
+
+    .light-mode .review-card {
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .light-mode .review-card:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+    }
+
+    .light-mode .user-profile {
+      border-bottom-color: #ddd;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .user-name {
+      color: #00ffcc;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .light-mode .user-name {
+      color: #007a5c;
+    }
+
+    .user-feedback {
+      color: #ccc;
+      line-height: 1.5;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .light-mode .user-feedback {
+      color: #666;
+    }
+
+    .user-rating {
+      color: #ffd700;
+      font-size: 18px;
+      text-align: center;
+      padding: 8px;
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .light-mode .user-rating {
+      background: rgba(255, 215, 0, 0.2);
+    }
+
+    .dare-title {
+      color: #00ffe5;
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .light-mode .dare-title {
+      color: #007a5c;
+    }
+
+    .dare-description,
+    .dare-difficulty,
+    .dare-points {
+      color: #ccc;
+      margin-bottom: 8px;
+    }
+
+    .light-mode .dare-description,
+    .light-mode .dare-difficulty,
+    .light-mode .dare-points {
+      color: #666;
+    }
+
+    .view-dare-btn {
+      display: block;
+      margin-top: 10px;
+      background: #00ffd5;
+      color: #111;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .view-dare-btn {
+      background: #007a5c;
+      color: white;
+    }
+
+    .view-dare-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 213, 0.3);
+    }
+
+    .light-mode .view-dare-btn:hover {
+      box-shadow: 0 4px 12px rgba(0, 122, 92, 0.3);
+    }
+
+    .footer {
+      background: #111;
+      padding: 30px;
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-top: 60px;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .footer {
+      background: #f8f9fa;
+      color: #666;
+    }
+
+    /* Mobile First Responsive Design */
+    @media (max-width: 480px) {
+      .header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .nav-container {
+        width: 100%;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+      }
+
+      nav a {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+
+      .post-dare-btn {
+        order: -1;
+        width: 100%;
+        text-align: center;
+        margin-right: 0 !important;
+      }
+
+      .auth-buttons {
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .theme-toggle {
+        margin-left: 0;
+        padding: 6px 10px;
+        font-size: 14px;
+      }
+
+      .slider-container {
+        height: 300px;
+        padding: 40px 15px 30px;
+      }
+
+      .slider-slide h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+      }
+
+      .slider-slide p {
+        font-size: 1rem;
+      }
+
+      .main-content {
+        padding: 40px 15px;
+      }
+
+      .section-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .dare-options {
+        flex-direction: column;
+        gap: 15px;
+        margin: 30px 0;
+      }
+
+      .dare-options a {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+
+      .dare-card,
+      .review-card {
+        width: 100%;
+        margin: 0 10px;
+        padding: 20px;
+      }
+
+      .dares-container,
+      .reviews-container {
+        gap: 20px;
+        padding: 15px 0;
+      }
+
+      .dare-title {
+        font-size: 18px;
+      }
+
+      .user-avatar {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+      }
+
+      .user-name {
+        font-size: 14px;
+      }
+
+      .user-feedback {
+        font-size: 13px;
+      }
+
+      .footer {
+        padding: 20px 15px;
+        font-size: 12px;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 768px) {
+      .header {
+        padding: 18px 30px;
+      }
+
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .auth-buttons {
+        flex-direction: row;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .theme-toggle {
+        margin-left: 0;
+      }
+
+      .slider-container {
+        height: 320px;
+        padding: 50px 20px 35px;
+      }
+
+      .slider-slide h2 {
+        font-size: 2.2rem;
+      }
+
+      .slider-slide p {
+        font-size: 1.1rem;
+      }
+
+      .main-content {
+        padding: 50px 25px;
+      }
+
+      .section-title {
+        font-size: 26px;
+      }
+
+      .dare-card,
+      .review-card {
+        width: 45%;
+        min-width: 280px;
+      }
+
+      .dares-container,
+      .reviews-container {
+        gap: 30px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .header {
+        padding: 18px 35px;
+      }
+
+      .main-content {
+        padding: 55px 30px;
+      }
+
+      .dare-card,
+      .review-card {
+        width: 45%;
+        min-width: 280px;
+      }
+
+      .dares-container,
+      .reviews-container {
+        gap: 35px;
+      }
+    }
+
+    @media (min-width: 1025px) and (max-width: 1200px) {
+      .dare-card,
+      .review-card {
+        width: 30%;
+        min-width: 280px;
+      }
+    }
+
+    @media (min-width: 1201px) {
+      .main-content {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .dare-card,
+      .review-card {
+        width: 350px;
+      }
+
+      .dares-container,
+      .reviews-container {
+        gap: 50px;
+      }
+    }
+
+    /* Landscape orientation for phones */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .slider-container {
+        height: 250px;
+        padding: 30px 15px 20px;
+      }
+
+      .slider-slide h2 {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+      }
+
+      .slider-slide p {
+        font-size: 0.9rem;
+      }
+
+      .main-content {
+        padding: 30px 15px;
+      }
+
+      .section {
+        margin-bottom: 50px;
+      }
+    }
+
+    /* High DPI screens */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .brand {
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .section-title {
+        -webkit-font-smoothing: antialiased;
+      }
+    }
+
+    /* Touch device optimizations */
+    @media (hover: none) and (pointer: coarse) {
+      .dare-card,
+      .review-card {
+        transform: none !important;
+      }
+
+      .dare-card:active,
+      .review-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s;
+      }
+
+      nav a,
+      .login-btn,
+      .theme-toggle,
+      .view-dare-btn {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="brand">Dareora</div>
+    <div class="nav-container">
+      <nav>
+        <a href="#" class="post-dare-btn">Post Dare</a>
+        <a href="{% url 'explore' %}">Explore</a>
+        <a href="{% url 'leaderboard' %}">Leaderboard</a>
+        <a href="{% url 'community' %}">Community</a>
+      </nav>
+      <div class="auth-buttons">
+        <a href="#" class="login-btn">Login</a>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span class="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-text">Dark</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="slider-container">
+    <div class="slider-wrapper">
+      <div class="slider-slide slide-active">
+        <h2>🎮 Welcome to Dareora</h2>
+        <p>A thrilling community where you challenge & conquer</p>
+      </div>
+      <div class="slider-slide">
+        <h2>💥 Top Dare This Month</h2>
+        <p>"Midnight Forest Solo" - 600 points</p>
+      </div>
+      <div class="slider-slide">
+        <h2>👑 Top Darer</h2>
+        <p>BraveHeart - 3250 points</p>
+      </div>
+    </div>
+
+    <!-- Dots navigation -->
+    <div class="slider-controls">
+      <button class="slider-dot active" data-slide="0"></button>
+      <button class="slider-dot" data-slide="1"></button>
+      <button class="slider-dot" data-slide="2"></button>
+    </div>
+  </div>
+
+  <main class="main-content">
+    <div class="section">
+      <h2 class="section-title">Dare to Discover, Dare to Achieve</h2>
+      <section class="dare-options">
+        <a href="#">Post Public Dare</a>
+        <a href="#">Start Dare with Friends</a>
+      </section>
+    </div>
+
+    <div class="section">
+      <section class="trending-dares">
+        <h2 class="section-title">⚔️ Trending Dares</h2>
+        <div class="dares-container">
+          <div class="dare-card">
+            <h3 class="dare-title">Eat the Spiciest Chili</h3>
+            <p class="dare-description">Conquer the Carolina Reaper and record your reaction!</p>
+            <p class="dare-difficulty">Difficulty: Extreme</p>
+            <p class="dare-points">500 points</p>
+            <a href="#" class="view-dare-btn">View Dare</a>
+          </div>
+
+          <div class="dare-card">
+            <h3 class="dare-title">Blindfolded Maze Run</h3>
+            <p class="dare-description">Navigate a maze blindfolded with verbal cues only.</p>
+            <p class="dare-difficulty">Difficulty: Hard</p>
+            <p class="dare-points">350 points</p>
+            <a href="#" class="view-dare-btn">View Dare</a>
+          </div>
+
+          <div class="dare-card">
+            <h3 class="dare-title">Midnight Forest Solo</h3>
+            <p class="dare-description">Spend a night alone in the forest, no electronics.</p>
+            <p class="dare-difficulty">Difficulty: Very Hard</p>
+            <p class="dare-points">600 points</p>
+            <a href="#" class="view-dare-btn">View Dare</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="section">
+      <section class="reviews-section">
+        <h2 class="section-title">⭐ User Reviews</h2>
+        <div class="reviews-container">
+          <div class="review-card">
+            <div class="user-profile">
+              <div class="user-avatar">👤</div>
+              <div class="user-name">User123</div>
+            </div>
+            <p class="user-feedback">This website is amazing! Dares are fun and community is awesome.</p>
+            <div class="user-rating">★★★★★</div>
+          </div>
+          <div class="review-card">
+            <div class="user-profile">
+              <div class="user-avatar">👤</div>
+              <div class="user-name">Reviewer Pro</div>
+            </div>
+            <p class="user-feedback">Great concept. Just need better filtering to find dares quickly.</p>
+            <div class="user-rating">★★★★☆</div>
+          </div>
+          <div class="review-card">
+            <div class="user-profile">
+              <div class="user-avatar">👤</div>
+              <div class="user-name">DareFanatic</div>
+            </div>
+            <p class="user-feedback">The leaderboard keeps me hooked! Highly recommend!</p>
+            <div class="user-rating">★★★★★</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Connect with us on social media • Made with 💜 Visily</p>
+    <p>© 2025 DareHub. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slider-slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((s, i) => {
+        s.classList.remove('slide-active');
+        if (i === index) s.classList.add('slide-active');
+      });
+      dots.forEach(dot => dot.classList.remove('active'));
+      dots[index].classList.add('active');
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentSlide = parseInt(dot.getAttribute('data-slide'));
+        showSlide(currentSlide);
+      });
+    });
+
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 5000);
+
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.querySelector('.theme-toggle-icon');
+      const themeText = document.querySelector('.theme-toggle-text');
+      
+      body.classList.toggle('light-mode');
+      
+      if (body.classList.contains('light-mode')) {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light';
+        // Store preference
+        localStorage.setItem('theme', 'light');
+      } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark';
+        // Store preference
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      const body = document.body;
+      const themeIcon = document.querySelector('.theme-toggle-icon');
+      const themeText = document.querySelector('.theme-toggle-text');
+      
+      if (savedTheme === 'light') {
+        body.classList.add('light-mode');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light';
+      }
+    });
+  </script>
+</body>
+
+</html>
