@@ -43,7 +43,11 @@
       font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: 1px;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
     }
+
 
     .nav-links {
       display: flex;
@@ -355,7 +359,7 @@
 
   <!-- ✅ Navbar -->
   <nav class="navbar" id="navbar">
-    <div class="logo">Dareora</div>
+    <a href="{% url 'home' %}" class="logo">Dareora</a>
     <div class="nav-links">
       <a href="{% url 'postdare' %}"><button class="btn btn-glow">Post Dare</button></a>
       <a href="{% url 'explore' %}">Explore</a>

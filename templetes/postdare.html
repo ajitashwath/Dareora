@@ -607,10 +607,9 @@
 <body>
 
   <header class="header">
-    <div class="brand">Dareora</div>
+    <a href="{% url 'home' %}"><div class="brand">Dareora</div></a>
     <div class="nav-container">
       <nav>
-        <a href="{% url 'home' %}" class="home-btn">Home</a>
         <a href="{% url 'explore' %}">Explore</a>
         <a href="{% url 'leaderboard' %}">Leaderboard</a>
         <a href="{% url 'community' %}">Community</a>
