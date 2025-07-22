@@ -7,5 +7,6 @@ urlpatterns = [
     path('',include("home.urls")),
     path("explore/",include("explore.urls")),
     path("leaderboard/",include("leaderboard.urls")),
-    path("community/",include("community.urls"))
+    path("community/",include("community.urls")),
+    path("post/", include("post.urls")),
 ]
