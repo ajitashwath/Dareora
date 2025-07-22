@@ -1,6 +1,8 @@
 # 🎮 Dareora
 
-![Dareora Logo Placeholder](https://placehold.co/400x150/00ffcc/000000?text=Dareora+Logo)
+<p align="center">
+  <img src="assets/dareora-logo.png" alt="Dareora Logo" width="300">
+</p>
 
 ## ✨ Dare to Discover, Dare to Achieve!
 
