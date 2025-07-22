@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'leaderboard.apps.LeaderboardConfig',
     'community.apps.CommunityConfig',
     'postdare.apps.PostdareConfig',
-    'userprofile.apps.UserprofileConfig'
+    'userprofile.apps.UserprofileConfig',
+    'login.apps.LoginConfig'
 ]
 
 MIDDLEWARE = [
