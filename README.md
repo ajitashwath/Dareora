@@ -1,7 +1,7 @@
 # 🎮 Dareora
 
 <p align="center">
-  <img src="assets/dareora-logo.png" alt="Dareora Logo" width="300">
+  <img src="./assets/dareora-logo.png" alt="Dareora Logo" width="300">
 </p>
 
 ## ✨ Dare to Discover, Dare to Achieve!
