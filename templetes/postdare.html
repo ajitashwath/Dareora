@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Post Dare - DareHub</title>
+  <title>Post Dare | Dareora</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap"
     rel="stylesheet">
   <style>
@@ -610,10 +610,10 @@
     <div class="brand">Dareora</div>
     <div class="nav-container">
       <nav>
-        <a href="#" class="home-btn">Home</a>
-        <a href="#">Explore</a>
-        <a href="#">Leaderboard</a>
-        <a href="#">Community</a>
+        <a href="{% url 'home' %}" class="home-btn">Home</a>
+        <a href="{% url 'explore' %}">Explore</a>
+        <a href="{% url 'leaderboard' %}">Leaderboard</a>
+        <a href="{% url 'community' %}">Community</a>
       </nav>
       <div class="auth-buttons">
         <a href="#" class="login-btn">Login</a>
