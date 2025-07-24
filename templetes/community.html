@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Community Hub | Dareora</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dareora Community Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap"
+    rel="stylesheet">
+
   <style>
     * {
       box-sizing: border-box;
@@ -41,7 +45,11 @@
       font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: 1px;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
     }
+
 
     .nav-links {
       display: flex;
@@ -188,7 +196,8 @@
       background: #00d3a8;
     }
 
-    .post, .testimonial {
+    .post,
+    .testimonial {
       background: #1f1f33;
       border: 1px solid #2d2d44;
       border-radius: 10px;
@@ -347,17 +356,18 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- ✅ Navbar -->
   <nav class="navbar" id="navbar">
-    <div class="logo">Dareora</div>
+    <a href="{% url 'home' %}" class="logo">Dareora</a>
     <div class="nav-links">
-      <button class="btn btn-glow">Post Dare</button>
+      <a href="{% url 'postdare' %}"><button class="btn btn-glow">Post Dare</button></a>
       <a href="{% url 'explore' %}">Explore</a>
       <a href="{% url 'leaderboard' %}">Leaderboard</a>
-      <a href="{% url%}" class="btn btn-glow">Community</a>
-      <button class="btn btn-outline">Login</button>
+      <a href="{% url 'community' %}" class="btn btn-glow">Community</a>
+      <button class="btn btn-outline"><a href="{% url 'login' %}">Login</a></button>
       <button class="btn-darkmode" id="mode-toggle">🌙 <span>Dark</span></button>
     </div>
   </nav>
@@ -367,10 +377,22 @@
     <h1>Community Hub</h1>
     <p>Where courage meets community</p>
     <div class="stats">
-      <div class="stat"><h2>2,847</h2><p>Active Members</p></div>
-      <div class="stat"><h2>156,893</h2><p>Total Uplifts</p></div>
-      <div class="stat"><h2>9,234</h2><p>Dares Posted</p></div>
-      <div class="stat"><h2>47,892</h2><p>Dare Responses</p></div>
+      <div class="stat">
+        <h2>2,847</h2>
+        <p>Active Members</p>
+      </div>
+      <div class="stat">
+        <h2>156,893</h2>
+        <p>Total Uplifts</p>
+      </div>
+      <div class="stat">
+        <h2>9,234</h2>
+        <p>Dares Posted</p>
+      </div>
+      <div class="stat">
+        <h2>47,892</h2>
+        <p>Dare Responses</p>
+      </div>
     </div>
   </header>
 
@@ -382,13 +404,25 @@
     </div>
 
     <div class="post">
-      <div class="info"><div class="avatar">JD</div><div><strong>Riddhi</strong><div class="meta">2 hours ago</div></div></div>
+
+      <div class="info">
+        <div class="avatar">JD</div>
+        <div><strong>John Doe</strong>
+          <div class="meta">2 hours ago</div>
+        </div>
+      </div>
+
       <p>Just completed my first dare! It was nerve-wracking but so worth it. The community support here is amazing!</p>
       <div class="interaction">💬 2 | ❤️ 5 | 🔁 2</div>
     </div>
 
     <div class="post">
-      <div class="info"><div class="avatar">SR</div><div><strong>Sara Ray</strong><div class="meta">1 day ago</div></div></div>
+      <div class="info">
+        <div class="avatar">SR</div>
+        <div><strong>Sara Ray</strong>
+          <div class="meta">1 day ago</div>
+        </div>
+      </div>
       <p>Thanks to everyone who encouraged me on yesterday’s dare. This community pushes me to be braver every day!</p>
       <div class="interaction">💬 0 | ❤️ 3 | 🔁 1</div>
     </div>
@@ -396,18 +430,29 @@
     <h2 class="section-title">What Members Say</h2>
 
     <div class="testimonial">
-      <div class="info"><div class="avatar">AJ</div><div><strong>Alice Johnson</strong></div></div>
-      <p>"This community broadened my confidence. The dares helped me step out of my comfort zone in the best way possible."</p>
+      <div class="info">
+        <div class="avatar">AJ</div>
+        <div><strong>Alice Johnson</strong></div>
+      </div>
+      <p>"This community broadened my confidence. The dares helped me step out of my comfort zone in the best way
+        possible."</p>
     </div>
 
     <div class="testimonial">
-      <div class="info"><div class="avatar">MS</div><div><strong>Mario Santos</strong></div></div>
+      <div class="info">
+        <div class="avatar">MS</div>
+        <div><strong>Mario Santos</strong></div>
+      </div>
       <p>"I’ve made lifelong friends here. The support and encouragement from everyone is genuinely life-changing."</p>
     </div>
 
     <div class="testimonial">
-      <div class="info"><div class="avatar">DC</div><div><strong>David Chen</strong></div></div>
-      <p>"From shy introvert to confident leader – this community’s dares and challenges helped me discover what I really am."</p>
+      <div class="info">
+        <div class="avatar">DC</div>
+        <div><strong>David Chen</strong></div>
+      </div>
+      <p>"From shy introvert to confident leader – this community’s dares and challenges helped me discover what I
+        really am."</p>
     </div>
   </div>
 
@@ -419,8 +464,10 @@
   <!-- ✅ Discord Button -->
   <a class="discord-btn" href="https://discord.gg/YOUR_INVITE_CODE" target="_blank" aria-label="Join us on Discord">
     <svg viewBox="0 0 245 240" xmlns="http://www.w3.org/2000/svg">
-      <path d="M104.4 104.2c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1 10.3-5 10.2-11.1-4.5-11.1-10.2-11.1zm36.2 0c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1 10.3-5 10.2-11.1-4.5-11.1-10.2-11.1z"/>
-      <path d="M189.5 20h-134C44 20 36 28.6 36 38.9V202c0 10.3 8 18.9 19.5 18.9h112.5l-5.3-18.5 12.8 11.9 12.2 11.3 21.7 19.3V38.9c0-10.3-8-18.9-19.5-18.9z"/>
+      <path
+        d="M104.4 104.2c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1 10.3-5 10.2-11.1-4.5-11.1-10.2-11.1zm36.2 0c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1 10.3-5 10.2-11.1-4.5-11.1-10.2-11.1z" />
+      <path
+        d="M189.5 20h-134C44 20 36 28.6 36 38.9V202c0 10.3 8 18.9 19.5 18.9h112.5l-5.3-18.5 12.8 11.9 12.2 11.3 21.7 19.3V38.9c0-10.3-8-18.9-19.5-18.9z" />
     </svg>
   </a>
 
@@ -457,4 +504,5 @@
   </script>
 
 </body>
+
 </html>

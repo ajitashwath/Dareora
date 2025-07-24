@@ -607,16 +607,16 @@
 <body>
 
   <header class="header">
-    <div class="brand">Dareora</div>
+    <a href="{% url 'home' %}"><div class="brand">Dareora</div></a>
     <div class="nav-container">
       <nav>
-        <a href="{% url 'home' %}" class="home-btn">Home</a>
+
         <a href="{% url 'explore' %}">Explore</a>
         <a href="{% url 'leaderboard' %}">Leaderboard</a>
         <a href="{% url 'community' %}">Community</a>
       </nav>
       <div class="auth-buttons">
-        <a href="#" class="login-btn">Login</a>
+        <a href="{% url 'login' %}" class="login-btn">Login</a>
         <button class="theme-toggle" onclick="toggleTheme()">
           <span class="theme-toggle-icon">🌙</span>
           <span class="theme-toggle-text">Dark</span>

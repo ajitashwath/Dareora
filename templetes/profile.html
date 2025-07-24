@@ -56,6 +56,32 @@
       letter-spacing: 1px;
     }
 
+    a.brand {
+      color: inherit !important;
+      text-decoration: none !important;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 30px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    a.brand:hover {
+      color: inherit !important;
+      text-shadow: 0 0 10px rgba(0, 255, 195, 0.5);
+    }
+
+    a.brand:visited,
+    a.brand:active,
+    a.brand:focus {
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+
+    .light-mode a.brand:hover {
+      text-shadow: 0 0 10px rgba(0, 122, 92, 0.5);
+    }
+
     .nav-container {
       display: flex;
       gap: 20px;
@@ -541,13 +567,12 @@
 <body>
 
   <header class="header">
-    <div class="brand">Dareora</div>
+    <a href="{% url 'home' %}" class="brand">Dareora</a>
     <div class="nav-container">
       <nav>
-        <a href="#">Home</a>
-        <a href="#">Explore</a>
-        <a href="#">Leaderboard</a>
-        <a href="#">Community</a>
+        <a href="{% url 'explore' %}">Explore</a>
+        <a href="{% url 'leaderboard' %}">Leaderboard</a>
+        <a href="{% url 'community' %}">Community</a>
       </nav>
       <div class="auth-buttons">
         <button class="theme-toggle" onclick="toggleTheme()">
@@ -565,7 +590,7 @@
       <h1 class="profile-name">BraveHeart</h1>
       <p class="profile-title">🏆 Elite Darer • Level 15</p>
       <button class="edit-profile-btn">Edit Profile</button>
-      
+
       <div class="profile-stats">
         <div class="stat-item">
           <span class="stat-number">3,250</span>
@@ -701,36 +726,36 @@
   </main>
 
   <script>
-    // Theme toggle functionality
-    function toggleTheme() {
-      const body = document.body;
-      const themeIcon = document.querySelector('.theme-toggle-icon');
-      const themeText = document.querySelector('.theme-toggle-text');
-      
-      body.classList.toggle('light-mode');
-      
-      if (body.classList.contains('light-mode')) {
-        themeIcon.textContent = '☀️';
-        themeText.textContent = 'Light';
-        // Store preference in memory (since localStorage is not supported)
-        window.currentTheme = 'light';
-      } else {
-        themeIcon.textContent = '🌙';
-        themeText.textContent = 'Dark';
-        // Store preference in memory
-        window.currentTheme = 'dark';
-      }
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeToggleBtn = document.querySelector(".theme-toggle");
+      const icon = document.querySelector(".theme-toggle-icon");
+      const text = document.querySelector(".theme-toggle-text");
 
-    // Initialize theme on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      // Default to dark theme
-      window.currentTheme = 'dark';
+      // Load theme from localStorage or default to dark
+      const currentTheme = localStorage.getItem("theme") || "dark";
       
-      // Add some interactive effects
-      const dareItems = document.querySelectorAll('.dare-item');
-      dareItems.forEach(item => {
-        item.addEventListener('click', function() {
+      // Apply the saved theme
+      if (currentTheme === "light") {
+        document.body.classList.add("light-mode");
+        icon.textContent = "☀️";
+        text.textContent = "Light";
+      } else {
+        document.body.classList.remove("light-mode");
+        icon.textContent = "🌙";
+        text.textContent = "Dark";
+      }
+
+      // Toggle theme on click
+      themeToggleBtn.addEventListener("click", () => {
+        const isLight = document.body.classList.toggle("light-mode");
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+        icon.textContent = isLight ? "☀️" : "🌙";
+        text.textContent = isLight ? "Light" : "Dark";
+      });
+
+      // Optional animations
+      document.querySelectorAll('.dare-item').forEach(item => {
+        item.addEventListener('click', function () {
           this.style.transform = 'translateX(10px)';
           setTimeout(() => {
             this.style.transform = 'translateX(5px)';
@@ -738,9 +763,8 @@
         });
       });
 
-      const achievementItems = document.querySelectorAll('.achievement-item');
-      achievementItems.forEach(item => {
-        item.addEventListener('click', function() {
+      document.querySelectorAll('.achievement-item').forEach(item => {
+        item.addEventListener('click', function () {
           this.style.transform = 'scale(1.1) rotate(5deg)';
           setTimeout(() => {
             this.style.transform = 'scale(1.05)';
@@ -748,13 +772,12 @@
         });
       });
 
-      // Edit profile button functionality
-      const editBtn = document.querySelector('.edit-profile-btn');
-      editBtn.addEventListener('click', function() {
+      document.querySelector('.edit-profile-btn').addEventListener('click', function () {
         alert('Edit Profile functionality would be implemented here!');
       });
     });
   </script>
+
 </body>
 
 </html>
