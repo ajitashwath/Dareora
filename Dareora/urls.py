@@ -8,7 +8,9 @@ urlpatterns = [
     path("explore/",include("explore.urls")),
     path("leaderboard/",include("leaderboard.urls")),
     path("community/",include("community.urls")),
+
     path("post_dare/",include("postdare.urls")),
     path("profile/",include("userprofile.urls")),
     path("login/",include("login.urls"))
+
 ]

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>DareHub</title>
+  <title>Dareora</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500;700&display=swap"
     rel="stylesheet">
   <style>
@@ -797,11 +797,14 @@
 
 <body>
 
+
   <header class="header">
     <div class="brand">Dareora</div>
     <div class="nav-container">
       <nav>
+
         <a href="{% url 'postdare' %}" class="post-dare-btn">Post Dare</a>
+
         <a href="{% url 'explore' %}">Explore</a>
         <a href="{% url 'leaderboard' %}">Leaderboard</a>
         <a href="{% url 'community' %}">Community</a>
@@ -813,21 +816,25 @@
           <span class="theme-toggle-text">Dark</span>
         </button>
       </div>
+
     </div>
-  </header>
+  </div>
+</header>
+
+
 
   <div class="slider-container">
     <div class="slider-wrapper">
       <div class="slider-slide slide-active">
-        <h2>🎮 Welcome to Dareora</h2>
+        <h2>Welcome to Dareora</h2>
         <p>A thrilling community where you challenge & conquer</p>
       </div>
       <div class="slider-slide">
-        <h2>💥 Top Dare This Month</h2>
+        <h2>Top Dare This Month</h2>
         <p>"Midnight Forest Solo" - 600 points</p>
       </div>
       <div class="slider-slide">
-        <h2>👑 Top Darer</h2>
+        <h2>Top Darer</h2>
         <p>BraveHeart - 3250 points</p>
       </div>
     </div>
